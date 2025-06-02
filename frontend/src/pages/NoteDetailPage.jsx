@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
+import api from "../lib/axios";
 
 const NoteDetailPage = () => {
   const [note, setNote] = useState(null);
@@ -32,7 +33,7 @@ const NoteDetailPage = () => {
     if (!window.confirm("Are you sure you want to delete this note?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/notes/${id}`);
+      await api.delete(`/notes/${id}`);
       toast.success("Note deleted");
       navigate("/");
     } catch (error) {
@@ -52,7 +53,7 @@ const NoteDetailPage = () => {
 
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/api/notes/${id}`, note);
+      await api.put(`/notes/${id}`, note);
       toast.success("Note updated successfully");
       navigate("/");
     } catch (error) {
